@@ -1,7 +1,7 @@
 from core.model.Cell import Cell
 from core.Observable import Observable
 
-# Don't import this class, only the instance table below
+# Don't instantiate this class, import the table instance at the bottom
 class _Table(Observable):
     _grid = None
     _instance = None
@@ -57,5 +57,5 @@ class _Table(Observable):
         # No winner
         return Cell.EMPTY
 
-## Don't instatiate other tables, pls
+## Don't instantiate other tables, pls
 table = _Table()

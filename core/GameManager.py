@@ -1,4 +1,4 @@
-# Don't import this class, only the instance table below
+# Don't instantiate this class, import the game manager at the bottom
 class _GameManager:
     _undoStack = []
     _redoStack = []
@@ -27,5 +27,5 @@ class _GameManager:
         self._undoStack.clear()
         self._redoStack.clear()
 
-## Don't instatiate other game managers, pls
+## Don't instantiate other game managers, pls
 gameManager = _GameManager()
