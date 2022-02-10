@@ -7,6 +7,9 @@ class TableEvaluator():
     # player: the player interested on the evaluation
     # turn: who's turn it is currently
     def evaluate(self, table, player, turn) -> int:
+        if player != turn:
+            return -self.evaluate(table, turn, turn)
+
         if table.getWinner() == player:
             return 100
         if table.getWinner() == Cell.EMPTY:
