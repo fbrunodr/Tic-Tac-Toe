@@ -1,7 +1,8 @@
 from abc import ABC
 
 class Observable(ABC):
-    _observers = []
+    def __init__(self) -> None:
+        self._observers = []
 
     def notifyObservers(self) -> None:
         for observer in self._observers:
@@ -12,3 +13,6 @@ class Observable(ABC):
 
     def deleteObserver(self, observer) -> None:
         self._observers.remove(observer)
+        
+    def clearObservers(self) -> None:
+        self._observers.clear()

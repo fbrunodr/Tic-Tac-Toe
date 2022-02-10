@@ -1,17 +1,10 @@
-from email import header
+from tkinter import N
 from core.views.GameState import GameState
 from core.views.GameView import GameView
 from core.model.Cell import Cell
 from core.model.Table import table
-from core.GameManager import gameManager
 
 class GameViewTerminal(GameView):
-    def __init__(self) -> None:
-        super().__init__()
-        while self._state == GameState.PLAYING:
-            self.getUserInput()
-        table.deleteObserver(self)
-
     def update(self):
         line = ["" for i in range(3)]
         line[2] = str(table.getCell([2,0])) + '|' + str(table.getCell([2,1])) + '|' + str(table.getCell([2,2]))
@@ -33,35 +26,29 @@ class GameViewTerminal(GameView):
         print('  ' + footer)
         print()
 
-        if table.getWinner() != Cell.EMPTY:
+        if table.getWinner() != None:
             self._state = GameState.FINISHED
 
-    def undoMove(self) -> None:
-        gameManager.undo()
-
-    def redoMove(self) -> None:
-        gameManager.redo()
-
-    def getUserInput(self):
-        userInput = input('Chosse your move (ex.: "1 0", "undo", "redo"): ')
+    def play(self) -> None:
+        userInput = input('Choose your move (ex.: "1 0", "undo", "redo"): ')
 
         if userInput == "undo":
             print()
             self.undoMove()
-            return
+            return self.play()
         elif userInput == "redo":
             print()
             self.redoMove()
-            return
+            return self.play()
 
         x, y = map(int, userInput.split())
         pos = [x,y]
         validCellResponse = self.validCell(pos)
         if validCellResponse != "OK":
             print(validCellResponse)
-            return
+            self.play()
         print()
-        self.play(pos, Cell.CROSS)
+        return self.move(pos)
 
     def validCell(self, pos) -> str:
         x, y = pos

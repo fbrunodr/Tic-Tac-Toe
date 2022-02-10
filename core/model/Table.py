@@ -3,10 +3,8 @@ from core.Observable import Observable
 
 # Don't instantiate this class, import the table instance at the bottom
 class _Table(Observable):
-    _grid = None
-    _instance = None
-
     def __init__(self) -> None:
+        super().__init__()
         self._grid = [ [ Cell.EMPTY for j in range(3) ] for i in range(3) ]
 
     def clear(self) -> None:
@@ -54,8 +52,12 @@ class _Table(Observable):
         if value != Cell.EMPTY and all(cell == value for cell in secondaryDiagonal):
             return value
         
+        # Draw
+        if all(all([cell != Cell.EMPTY for cell in row]) for row in self._grid):
+            return Cell.EMPTY
+
         # No winner
-        return Cell.EMPTY
+        return None
 
 ## Don't instantiate other tables, pls
 table = _Table()

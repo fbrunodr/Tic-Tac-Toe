@@ -1,6 +1,6 @@
-from enum import Enum
+from enum import IntEnum
 
-class Cell(Enum):
+class Cell(IntEnum):
     EMPTY = 0
     CROSS = 1
     CIRCLE = 2

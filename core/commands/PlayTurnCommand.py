@@ -1,16 +1,12 @@
 from core.Command import Command
 from core.model.Table import table
-from core.model.Cell import Cell
+from core.PlayerManager import playerManager
 
-class ChangeCellCommand(Command):
-    _pos = None
-    _value = None
-    _prevValue = None
-
-    def __init__(self, pos, value) -> None:
+class PlayTurnCommand(Command):
+    def __init__(self, pos) -> None:
         self._isReduable = True
         self._pos = pos
-        self._value = value
+        self._value = playerManager.getCurrentPlayer()
         self._prevValue = table.getCell(pos)
 
     def execute(self) -> None:

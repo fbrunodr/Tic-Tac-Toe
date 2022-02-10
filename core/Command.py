@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
 class Command(ABC):
-    _isExecuted = False
-    _isReduable = False
+    def __init__(self) -> None:
+        self._isExecuted = False
+        self._isReduable = False
 
     @abstractmethod
     def execute(self) -> None:

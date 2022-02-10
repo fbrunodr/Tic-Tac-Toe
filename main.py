@@ -1,4 +1,4 @@
-from core.views.GameViewTerminal import GameViewTerminal
+from core.views.GameViewTerminalOnePlayer import GameViewTerminalOnePlayer
 
 if __name__ == "__main__":
-    gameViewTerminal = GameViewTerminal()
+    gameViewTerminalOnePlayer = GameViewTerminalOnePlayer()
