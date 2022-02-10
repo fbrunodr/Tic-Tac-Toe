@@ -6,6 +6,9 @@ class _PlayerManager():
     def __init__(self) -> None:
         self._currentPlayer = settings.getFirstToPlay()
 
+    def clear(self) -> None:
+        return self.__init__()
+
     def getCurrentPlayer(self) -> Cell:
         return self._currentPlayer
 

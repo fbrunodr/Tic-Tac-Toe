@@ -17,7 +17,7 @@ class AIplayer(Observer):
         self._proxyTable = deepcopy(table)
         self._proxyTable.clearObservers()
 
-    def play(self) -> None:
+    def getUserInput(self) -> None:
         tableEvaluator = TableEvaluator()
         currPlayer = playerManager.getCurrentPlayer()
         otherPlayer = Cell(int(currPlayer)%2 + 1)

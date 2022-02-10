@@ -16,7 +16,7 @@ class GameViewTerminalOnePlayer(GameViewTerminal):
             player = AI
 
         while self._state == GameState.PLAYING:
-            player.play()
+            player.getUserInput()
             if player == self:
                 player = AI
             else:
@@ -24,6 +24,7 @@ class GameViewTerminalOnePlayer(GameViewTerminal):
 
         table.deleteObserver(self)
         table.deleteObserver(AI)
+        return self.finish()
 
     def undoMove(self) -> None:
         gameManager.undo()
@@ -32,3 +33,6 @@ class GameViewTerminalOnePlayer(GameViewTerminal):
     def redoMove(self) -> None:
         gameManager.redo()
         gameManager.redo()
+
+    def finish(self) -> None:
+        pass

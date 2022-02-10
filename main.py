@@ -1,4 +1,4 @@
-from core.views.GameViewTerminalOnePlayer import GameViewTerminalOnePlayer
+from core.views.MainMenuView import MainMenuView
 
 if __name__ == "__main__":
-    gameViewTerminalOnePlayer = GameViewTerminalOnePlayer()
+    mainMenuView = MainMenuView()

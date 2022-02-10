@@ -7,11 +7,15 @@ class GameViewTerminalTwoPlayers(GameViewTerminal):
     def __init__(self) -> None:
         super().__init__()
         while self._state == GameState.PLAYING:
-            self.play()
+            self.getUserInput()
         table.deleteObserver(self)
+        return self.finish()
 
     def undoMove(self) -> None:
         gameManager.undo()
 
     def redoMove(self) -> None:
         gameManager.redo()
+
+    def finish(self) -> None:
+        pass

@@ -1,11 +1,15 @@
-from tkinter import N
 from core.views.GameState import GameState
 from core.views.GameView import GameView
 from core.model.Cell import Cell
 from core.model.Table import table
 
 class GameViewTerminal(GameView):
-    def update(self):
+
+    def update(self) -> None:
+        return self.show()
+
+    def show(self) -> None:
+        self.clearWindow()
         line = ["" for i in range(3)]
         line[2] = str(table.getCell([2,0])) + '|' + str(table.getCell([2,1])) + '|' + str(table.getCell([2,2]))
         line[1] = str(table.getCell([1,0])) + '|' + str(table.getCell([1,1])) + '|' + str(table.getCell([1,2]))
@@ -29,29 +33,33 @@ class GameViewTerminal(GameView):
         if table.getWinner() != None:
             self._state = GameState.FINISHED
 
-    def play(self) -> None:
-        userInput = input('Choose your move (ex.: "1 0", "undo", "redo"): ')
+    def getUserInput(self) -> None:
+        userInput = input('Choose your move (ex.: "1 0", "undo", "redo", "exit"): ')
 
         if userInput == "undo":
             print()
             self.undoMove()
-            return self.play()
+            return self.getUserInput()
         elif userInput == "redo":
             print()
             self.redoMove()
-            return self.play()
+            return self.getUserInput()
+        elif userInput == "exit":
+            self._state = GameState.FINISHED
+            return
 
         try:
             x, y = map(int, userInput.split())
         except:
             print("Invalid input")
-            return self.play()
+            return self.getUserInput()
 
         pos = [x,y]
         validCellResponse = self.validCell(pos)
         if validCellResponse != "OK":
             print(validCellResponse)
-            return self.play()
+            return self.getUserInput()
+
         print()
         return self.move(pos)
 
