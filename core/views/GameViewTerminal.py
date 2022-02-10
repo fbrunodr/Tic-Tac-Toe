@@ -41,7 +41,12 @@ class GameViewTerminal(GameView):
             self.redoMove()
             return self.play()
 
-        x, y = map(int, userInput.split())
+        try:
+            x, y = map(int, userInput.split())
+        except:
+            print("Invalid input")
+            return self.play()
+
         pos = [x,y]
         validCellResponse = self.validCell(pos)
         if validCellResponse != "OK":
