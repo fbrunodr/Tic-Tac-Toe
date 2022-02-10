@@ -46,7 +46,7 @@ class GameViewTerminal(GameView):
         validCellResponse = self.validCell(pos)
         if validCellResponse != "OK":
             print(validCellResponse)
-            self.play()
+            return self.play()
         print()
         return self.move(pos)
 
