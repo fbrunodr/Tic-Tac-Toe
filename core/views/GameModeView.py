@@ -1,6 +1,6 @@
 from core.views.View import View
-from core.views.GameViewTerminalTwoPlayers import GameViewTerminalTwoPlayers
-from core.views.GameViewTerminalOnePlayer import GameViewTerminalOnePlayer
+from core.views.GameViewTwoPlayers import GameViewTwoPlayers
+from core.views.GameViewOnePlayer import GameViewOnePlayer
 
 class GameModeView(View):
 
@@ -17,10 +17,10 @@ class GameModeView(View):
         userInput = input()
 
         if userInput == '1':
-            gameViewTerminalTwoPlayers = GameViewTerminalTwoPlayers()
+            gameViewTwoPlayers = GameViewTwoPlayers()
             return self.finish()
         elif userInput == '2':
-            gameViewTerminalOnePlayer = GameViewTerminalOnePlayer()
+            gameViewOnePlayer = GameViewOnePlayer()
             return self.finish()
         elif userInput == '3':
             return self.finish()

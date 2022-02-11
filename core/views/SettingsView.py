@@ -51,4 +51,5 @@ class SettingsView(View, Observer):
             return self.getUserInput()
 
     def finish(self) -> None:
+        settings.deleteObserver(self)
         return
