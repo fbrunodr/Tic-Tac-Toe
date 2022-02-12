@@ -13,7 +13,7 @@ class MainMenuView(View):
         print("3. Exit")
         print()
 
-    def getUserInput(self) -> None:
+    def processInput(self) -> None:
         userInput = input()
 
         if userInput == '1':
@@ -26,7 +26,7 @@ class MainMenuView(View):
             return self.finish()
         else:
             print("Invalid input")
-            return self.getUserInput()
+            return self.processInput()
 
     def finish(self) -> None:
         return

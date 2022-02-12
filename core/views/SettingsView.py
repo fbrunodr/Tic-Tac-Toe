@@ -33,22 +33,22 @@ class SettingsView(View, Observer):
         print("3. Back")
         print()
 
-    def getUserInput(self) -> None:
+    def processInput(self) -> None:
         userInput = input("Choose a option to change it: ")
 
         if userInput == '1':
             val = settings.getFirstToPlay()
             val = Cell(int(val)%2 + 1)
             settings.setFirstToPlay(val)
-            return self.getUserInput()
+            return self.processInput()
         elif userInput == '2':
             settings.setAIstarts(not settings.AIplayFirst())
-            return self.getUserInput()
+            return self.processInput()
         elif userInput == '3':
             return self.finish()
         else:
             print("Invalid input")
-            return self.getUserInput()
+            return self.processInput()
 
     def finish(self) -> None:
         settings.deleteObserver(self)

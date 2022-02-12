@@ -14,7 +14,7 @@ class GameView(View, Observer):
         table.clear()
         gameManager.clear()
         playerManager.clear()
-        
+
         self._state = GameState.PLAYING
 
     def getState(self) -> GameState:
@@ -54,17 +54,15 @@ class GameView(View, Observer):
     def redoMove(self) -> None:
         pass
 
-    def getUserInput(self) -> None:
+    def processInput(self) -> None:
         userInput = input('Choose your move (ex.: "1 0", "undo", "redo", "exit"): ')
 
         if userInput == "undo":
-            print()
             self.undoMove()
-            return self.getUserInput()
+            return self.processInput()
         elif userInput == "redo":
-            print()
             self.redoMove()
-            return self.getUserInput()
+            return self.processInput()
         elif userInput == "exit":
             self._state = GameState.FINISHED
             return
@@ -73,15 +71,14 @@ class GameView(View, Observer):
             x, y = map(int, userInput.split())
         except:
             print("Invalid input")
-            return self.getUserInput()
+            return self.processInput()
 
         pos = [x,y]
         validCellResponse = self.validCell(pos)
         if validCellResponse != "OK":
             print(validCellResponse)
-            return self.getUserInput()
+            return self.processInput()
 
-        print()
         return self.move(pos)
 
     def validCell(self, pos) -> str:

@@ -5,14 +5,14 @@ import platform
 class View(ABC):
     def __init__(self) -> None:
         self.show()
-        self.getUserInput()
+        self.processInput()
 
     @abstractmethod
     def show(self) -> None:
         pass
 
     @abstractmethod
-    def getUserInput(self) -> None:
+    def processInput(self) -> None:
         pass
 
     @abstractmethod

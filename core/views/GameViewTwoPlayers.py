@@ -8,8 +8,7 @@ class GameViewTwoPlayers(GameView):
     def __init__(self) -> None:
         super().__init__()
         while self._state == GameState.PLAYING:
-            self.getUserInput()
-        table.deleteObserver(self)
+            self.processInput()
         return self.finish()
 
     def undoMove(self) -> None:
@@ -19,6 +18,7 @@ class GameViewTwoPlayers(GameView):
         gameManager.redo()
 
     def finish(self) -> None:
+        table.deleteObserver(self)
         winner = table.getWinner()
         if winner == None:
             return
