@@ -43,7 +43,7 @@ class TableEvaluator():
 
     # player: who's turn it is currently
     def _hash(self, table, player) -> int:
-        hashVal = 0
+        hashVal1 = 0
         for i in [0, 1, 2]:
             for j in [0, 1, 2]:
                 cell = table.getCell(i,j)
@@ -53,5 +53,42 @@ class TableEvaluator():
                     coef = 1
                 else:
                     coef = 2
-                hashVal = 3*hashVal + coef
-        return hashVal
+                hashVal1 = 3*hashVal1 + coef
+
+        hashVal2 = 0
+        for i in [2, 1, 0]:
+            for j in [0, 1, 2]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal2 = 3*hashVal2 + coef
+
+        hashVal3 = 0
+        for i in [0, 1, 2]:
+            for j in [2, 1, 0]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal3 = 3*hashVal3 + coef
+
+        hashVal4 = 0
+        for i in [2, 1, 0]:
+            for j in [2, 1, 0]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal4 = 3*hashVal4 + coef
+
+        return min(hashVal1, hashVal2, hashVal3, hashVal4)
