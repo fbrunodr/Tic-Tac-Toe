@@ -91,4 +91,53 @@ class TableEvaluator():
                     coef = 2
                 hashVal4 = 3*hashVal4 + coef
 
-        return min(hashVal1, hashVal2, hashVal3, hashVal4)
+        hashVal5 = 0
+        for j in [0, 1, 2]:
+            for i in [0, 1, 2]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal5 = 3*hashVal5 + coef
+
+        hashVal6 = 0
+        for j in [2, 1, 0]:
+            for i in [0, 1, 2]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal6 = 3*hashVal6 + coef
+
+        hashVal7 = 0
+        for j in [0, 1, 2]:
+            for i in [2, 1, 0]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal7 = 3*hashVal7 + coef
+
+        hashVal8 = 0
+        for j in [2, 1, 0]:
+            for i in [2, 1, 0]:
+                cell = table.getCell(i,j)
+                if cell == Cell.EMPTY:
+                    coef = 0
+                elif cell == player:
+                    coef = 1
+                else:
+                    coef = 2
+                hashVal8 = 3*hashVal8 + coef
+
+        return min(hashVal1, hashVal2, hashVal3, hashVal4,
+                   hashVal5, hashVal6, hashVal7, hashVal8)
