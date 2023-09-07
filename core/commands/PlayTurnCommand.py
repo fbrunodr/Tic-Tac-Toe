@@ -3,18 +3,19 @@ from core.model.Table import table
 from core.PlayerManager import playerManager
 
 class PlayTurnCommand(Command):
-    def __init__(self, pos) -> None:
+    def __init__(self, row, col) -> None:
         self._isReduable = True
-        self._pos = pos
+        self._row = row
+        self._col = col
         self._value = playerManager.getCurrentPlayer()
-        self._prevValue = table.getCell(pos)
+        self._prevValue = table.getCell(row, col)
 
     def execute(self) -> None:
-        table.changeCell(self._pos, self._value)
+        table.changeCell(self._row, self._col, self._value)
         self._isExecuted = True
 
     def undo(self) -> None:
-        table.changeCell(self._pos, self._prevValue)
+        table.changeCell(self._row, self._col, self._prevValue)
         self._isExecuted = False
 
     def redo(self) -> None:

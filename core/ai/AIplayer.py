@@ -20,19 +20,20 @@ class AIplayer(Observer):
     def processInput(self) -> None:
         tableEvaluator = TableEvaluator()
         currPlayer = playerManager.getCurrentPlayer()
-        otherPlayer = Cell(int(currPlayer)%2 + 1)
-        bestMoveVal =  tableEvaluator.evaluate(self._proxyTable, currPlayer, currPlayer)
+        otherPlayer = Cell(int(currPlayer) ^ 3)
+        bestMoveVal =  tableEvaluator.evaluate(self._proxyTable, currPlayer)
         bestMoves = []
-        for i in range(3):
-            for j in range(3):
-                if self._proxyTable.getCell([i,j]) != Cell.EMPTY:
+        for i in [0, 1, 2]:
+            for j in [0, 1, 2]:
+                if self._proxyTable.getCell(i, j):
                     continue
-                self._proxyTable.changeCell([i,j], currPlayer)
-                if tableEvaluator.evaluate(self._proxyTable, currPlayer, otherPlayer) == bestMoveVal:
-                    bestMoves.append([i,j])
-                self._proxyTable.changeCell([i,j], Cell.EMPTY)
+                self._proxyTable.changeCell(i, j, currPlayer)
+                if -tableEvaluator.evaluate(self._proxyTable, otherPlayer) == bestMoveVal:
+                    bestMoves.append((i,j))
+                self._proxyTable.changeCell(i, j, Cell.EMPTY)
 
-        self.move(random.choice(bestMoves))
+        row, col = random.choice(bestMoves)
+        self.move(row, col)
 
-    def move(self, pos) -> None:
-        gameManager.executeCommand(PlayTurnCommand(pos))
+    def move(self, row, col) -> None:
+        gameManager.executeCommand(PlayTurnCommand(row, col))

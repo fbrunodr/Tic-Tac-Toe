@@ -26,9 +26,9 @@ class GameView(View, Observer):
     def show(self) -> None:
         self.clearWindow()
         line = ["" for i in range(3)]
-        line[2] = str(table.getCell([2,0])) + '|' + str(table.getCell([2,1])) + '|' + str(table.getCell([2,2]))
-        line[1] = str(table.getCell([1,0])) + '|' + str(table.getCell([1,1])) + '|' + str(table.getCell([1,2]))
-        line[0] = str(table.getCell([0,0])) + '|' + str(table.getCell([0,1])) + '|' + str(table.getCell([0,2]))
+        line[2] = str(table.getCell(2,0)) + '|' + str(table.getCell(2,1)) + '|' + str(table.getCell(2,2))
+        line[1] = str(table.getCell(1,0)) + '|' + str(table.getCell(1,1)) + '|' + str(table.getCell(1,2))
+        line[0] = str(table.getCell(0,0)) + '|' + str(table.getCell(0,1)) + '|' + str(table.getCell(0,2))
         divisor = '-----'
         footer = '0 1 2'
 
@@ -43,8 +43,8 @@ class GameView(View, Observer):
         if table.getWinner() != None:
             self._state = GameState.FINISHED
 
-    def move(self, pos) -> None:
-        gameManager.executeCommand(PlayTurnCommand(pos))
+    def move(self, row, col) -> None:
+        gameManager.executeCommand(PlayTurnCommand(row, col))
 
     @abstractmethod
     def undoMove(self) -> None:
@@ -68,23 +68,21 @@ class GameView(View, Observer):
             return
 
         try:
-            x, y = map(int, userInput.split())
+            row, col = map(int, userInput.split())
         except:
             print("Invalid input")
             return self.processInput()
 
-        pos = [x,y]
-        validCellResponse = self.validCell(pos)
+        validCellResponse = self.validCell(row, col)
         if validCellResponse != "OK":
             print(validCellResponse)
             return self.processInput()
 
-        return self.move(pos)
+        return self.move(row, col)
 
-    def validCell(self, pos) -> str:
-        x, y = pos
-        if x < 0 or x > 2 or y < 0 or y > 2:
+    def validCell(self, row, col) -> str:
+        if row < 0 or row > 2 or col < 0 or col > 2:
             return "Invalid coordinates;"
-        if table.getCell([x,y]) != Cell.EMPTY:
+        if table.getCell(row, col):
             return "Cell already taken."
         return "OK"

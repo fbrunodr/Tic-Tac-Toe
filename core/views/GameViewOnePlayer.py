@@ -6,6 +6,7 @@ from core.views.GameState import GameState
 from core.model.Table import table
 from core.Settings import settings
 from core.ai.AIplayer import AIplayer
+# import time
 
 class GameViewOnePlayer(GameView):
     def __init__(self) -> None:
@@ -18,11 +19,14 @@ class GameViewOnePlayer(GameView):
             player = self.AI
 
         while self._state == GameState.PLAYING:
+            # start = time.time()
             player.processInput()
             if player == self:
                 player = self.AI
             else:
                 player = self
+            # end = time.time()
+            # print(end - start)
 
         return self.finish()
 
@@ -39,7 +43,7 @@ class GameViewOnePlayer(GameView):
         currentPlayer = playerManager.getCurrentPlayer()
         for i in range(3):
             for j in range(3):
-                if currentPlayer == table.getCell([i,j]):
+                if currentPlayer == table.getCell(i,j):
                     return False
         return True
 
@@ -61,7 +65,7 @@ class GameViewOnePlayer(GameView):
         
         AIplayer = settings.getFirstToPlay()
         if not settings.AIplayFirst():
-            AIplayer = Cell(int(AIplayer)%2 + 1)
+            AIplayer = Cell(AIplayer ^ 3)
         
         if winner == AIplayer:
             print("You lost :'(")

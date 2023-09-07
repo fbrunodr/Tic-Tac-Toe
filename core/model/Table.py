@@ -13,45 +13,46 @@ class _Table(Observable):
                 self._grid[i][j] = Cell.EMPTY
         self.notifyObservers()
 
-    def getCell(self, pos) -> None:
-        x, y = pos
-        return self._grid[x][y]
+    def getCell(self, row, col) -> Cell:
+        return self._grid[row][col]
 
-    def changeCell(self, pos, value) -> None:
-        x, y = pos
-        self._grid[x][y] = value
+    def changeCell(self, row, col, value) -> None:
+        self._grid[row][col] = value
         self.notifyObservers()
     
     def getWinner(self) -> Cell:
-        # Rows
-        for i in range(3):
-            value = self._grid[i][0]
-            if value == Cell.EMPTY:
-                continue
-            row = self._grid[i]
-            if all(cell == value for cell in row):
-                return value
+        row1 = self._grid[0][0] & self._grid[0][1] & self._grid[0][2]
+        if row1 == 1 or row1 == 2:
+            return Cell(row1)
 
-        # Collumns
-        for j in range(3):
-            value = self._grid[0][j]
-            if value == Cell.EMPTY:
-                continue
-            collumn = [row[j] for row in self._grid]
-            if all(cell == value for cell in collumn):
-                return value
+        row2 = self._grid[1][0] & self._grid[1][1] & self._grid[1][2]
+        if row2 == 1 or row2 == 2:
+            return Cell(row2)
 
-        # Diagonals
-        mainDiagonal = [self._grid[i][i] for i in range(3)]
-        value = mainDiagonal[0]
-        if value != Cell.EMPTY and all(cell == value for cell in mainDiagonal):
-            return value
+        row3 = self._grid[2][0] & self._grid[2][1] & self._grid[2][2]
+        if row3 == 1 or row3 == 2:
+            return Cell(row3)
 
-        secondaryDiagonal = [self._grid[i][2-i] for i in range(3)]
-        value = secondaryDiagonal[0]
-        if value != Cell.EMPTY and all(cell == value for cell in secondaryDiagonal):
-            return value
+        col1 = self._grid[0][0] & self._grid[1][0] & self._grid[2][0]
+        if col1 == 1 or col1 == 2:
+            return Cell(col1)
+
+        col2 = self._grid[0][1] & self._grid[1][1] & self._grid[2][1]
+        if col2 == 1 or col2 == 2:
+            return Cell(col2)
+
+        col3 = self._grid[0][2] & self._grid[1][2] & self._grid[2][2]
+        if col3 == 1 or col3 == 2:
+            return Cell(col3)
         
+        main_diag = self._grid[0][0] & self._grid[1][1] & self._grid[2][2]
+        if main_diag == 1 or main_diag == 2:
+            return Cell(main_diag)
+
+        sec_diag = self._grid[2][0] & self._grid[1][1] & self._grid[0][2]
+        if sec_diag == 1 or sec_diag == 2:
+            return Cell(sec_diag)
+
         # Draw
         if all(all([cell != Cell.EMPTY for cell in row]) for row in self._grid):
             return Cell.EMPTY
